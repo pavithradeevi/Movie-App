@@ -1,13 +1,26 @@
 import "./App.css";
 import { AddColor } from "./AddColor"; // named
 import {useState} from "react";
-import { Navigate,  Routes, Route, Link } from "react-router-dom";
+import { Navigate,  Routes, Route, Link, useNavigate } from "react-router-dom";
 import { MovieDetails } from "./MovieDetails";
 import { UserList } from "./UserList";
 import { Home } from "./Home";
 import { NotFoundPage } from "./NotFoundPage";
 import { MovieList } from "./MovieList";
 import { AddMovie } from "./AddMovie";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { CssBaseline } from "@mui/material";
+
+
+
+
+
 
 const INTIAL_MOVIE_LIST = [
   {
@@ -83,18 +96,33 @@ const INTIAL_MOVIE_LIST = [
   }
 ];
 
+// 1.Creating-Create Context
+
+
 export default function App() {
   //Lifting the state up
   const [movieList, setMovieList] = useState(INTIAL_MOVIE_LIST);
+  const navigate=useNavigate()
+  const[mode,setMode]=useState("light")
 
+  // const [theme, setTheme] = useState('light');
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+  
   return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+      <Paper style={{borderRadius:0,minHeight:"100vh"}} elevation={24}>
     <div className="App">
 
-    <nav>
+    {/* <nav>
       <ul>
-        <li>
+        <li> */}
           {/* Link change page without refresh */}
-          <Link to="/">Home</Link>
+          {/* <Link to="/">Home</Link>
         </li>
         <li>
         <Link to="/movies">Movies</Link>        
@@ -106,22 +134,47 @@ export default function App() {
         <Link to="/movies/add">Add Movie</Link>   
         </li>
       </ul>
-    </nav>
+    </nav> */}
      {/* Router - to map the  URl with component*/}
+
+     <AppBar position="static">
+      <Toolbar>
+        <Button color="inherit"onClick={()=>navigate("/")}>HOME</Button>
+        <Button color="inherit"onClick={()=>navigate("/movies")}>Movies</Button>
+        <Button color="inherit"onClick={()=>navigate("/color-game")}>Color Game</Button>
+        <Button color="inherit"onClick={()=>navigate("/movies/add")}>Add Movie</Button>   
+       
+        <Button startIcon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+        color="inherit"
+        onClick={()=>setMode(mode=="light"?"dark":"light")}> {mode=="light"?"dark":"light"}Mode</Button> 
+        
+      </Toolbar>
+      </AppBar>
+
+
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<MovieList movieList={movieList} setMovieList={setMovieList}/>} />
         <Route path="/movies/:movieid" element={<MovieDetails movieList={movieList}/>} />
         <Route path="/movies/add" element={<AddMovie movieList={movieList} setMovieList={setMovieList} />} />
         <Route path="/color-game" element={<AddColor />} />
-        <Route path="/users" element={<UserList />}/>    
-        <Route path="/films" element={<Navigate replace to="/movies" />}  />  
+        {/* <Route path="/users" element={<UserList />}/>    
+        <Route path="/films" element={<Navigate replace to="/movies" />}  />   */}
         <Route path="/404" element={<NotFoundPage />}/>    
         <Route path="*" element={<Navigate replace to="/404" /> } />      
       </Routes> 
  
       </div>
+      </Paper>
+    </ThemeProvider>
   );
   //JSX ends
 }
 
+
+
+
+
+
+// 1.creatig-create context

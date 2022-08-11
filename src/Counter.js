@@ -36,7 +36,7 @@ export function Counter() {
         // console.log(like);
         setDisLike(dislike + 1);
       }}>👎{dislike}</button> */}
-      <IconButton aria-label="delete" size="large">
+      <IconButton aria-label="delete" >
           <DeleteIcon />
         </IconButton>
     </div>

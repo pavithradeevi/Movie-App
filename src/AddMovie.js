@@ -25,10 +25,13 @@ export function AddMovie( { movieList, setMovieList}) {
           placeholder="Enter Poster Link" /><br></br><br></br><br></br>
 
         <TextField onChange={(event) => setSummary(event.target.value)}
-          label="Summary" variant="standard" /><br></br><br></br><br></br>
+          placeholder="Enter Summary" /><br></br><br></br><br></br>
 
-        <TextField onChange={(event) => setTrailer(event.target.value)}
-          label="Trailer" variant="standard" /><br></br><br></br><br></br>
+          <TextField onChange={(event) => setTrailer(event.target.value)}
+          placeholder="Enter Trailer Link"  /><br></br><br></br><br></br>
+
+        {/* <TextField onChange={(event) => setTrailer(event.target.value)}
+          label="Trailer" variant="standard" /><br></br><br></br><br></br> */}
 
         {/* newMovie = object */}
         <Button onClick={() => {
